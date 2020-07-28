@@ -8,15 +8,32 @@
     <link rel="stylesheet" type="text/css" href="./static/css/styles.css">
     <!-- JS -->
     <script type="text/javascript" src="./static/js/constants.js" ></script>
-    <script type="text/javascript" src="./static/js/ws.js" ></script>
+    <script type="text/javascript" src="./static/js/components.js" ></script>
     <script type="text/javascript" src="./static/js/utils.js" ></script>
-    <script type="text/javascript" src="./static/js/title.js" ></script>
-    <script type="text/javascript" src="./static/js/resumepage.js" ></script>
-    <script type="text/javascript" src="./static/js/gridpage.js" ></script>
-    <script type="text/javascript" src="./static/js/startpage.js" ></script>
     <script type="text/javascript" src="./static/js/main.js" ></script>
 </head>
 <body>
-    <div id="main-content"></div>
+    <header>
+        <div class="title-container">
+            <img src="../src/static/img/logo.jpg" class= "main-logo">
+            <h1>Merkle Software Developer Candidate Exercise</h1>
+        </div>
+    </header>
+    <main>
+        <div id="main-content" class="main-container">
+            <div id="form-container" class="screen-container">
+                <fieldset>
+                    <legend>Please, type in the keyword for the game</legend>
+                    <p>Please, use a valid keyword of letters and numbers, without spaces, local characters (such as 'ñ') or special symbols</p>
+                    <input type="text" id="keyword" name="keyword" placeholder="keyword">
+                    <button onclick="validateKeyword()">Start!</button>
+                    <p id="form-error-mssg" class="error"></p>
+                </fieldset>
+            </div>
+            <div id="game-container" class="screen-container"></div>
+            <div id="resume-container" class="screen-container"></div>
+        </div>
+    </main>
+    
 </body>
 </html>

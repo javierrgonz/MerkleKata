@@ -5,10 +5,29 @@ body {
 
 .title-container {
     text-align: center;
-    margin-top: 7em;
+    margin-top: 5em;
 }
 
 .main-logo {
-    width: 10em;
+    width: 8em;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.screen-container {
+    text-align: center;
+    width: 680px;
+    display: block;
+    margin: 5em auto 0em auto;
+}
+
+.form-container fieldset{
+    padding: 2em;
+}
+
+.error {
+    color: red;
+}
+
+#resume-container {
+    display: none;
 }
