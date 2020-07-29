@@ -52,3 +52,7 @@ body {
 td:hover {
     box-shadow: 2px 2px 15px -2px rgb(50, 50, 50);
 }
+
+table {
+    box-shadow: 2px 2px 15px -2px rgb(50, 50, 50);
+}

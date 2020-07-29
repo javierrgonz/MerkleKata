@@ -1,5 +1,6 @@
 let flippedCards = [];
 let actualCards = [];
+let startTime = null;
 
 function validateKeyword() {
     var keyword = document.getElementById(MAIN_FORM_KEYWORD_ID);
@@ -22,6 +23,7 @@ function startGame(keyword) {
             // Show grid
             AsyncUtils.wait(1000, Utils.toogleVisibylityById, GAME_CONTAINER_ID);
             AsyncUtils.wait(1500, removeCardsOpacity);
+            startTime = new Date().getTime();
        } else {
             ErrorUtils.updateMainFormError(PIXABAY_NO_RESULTS_ERROR_MSG);
        }
@@ -47,6 +49,11 @@ function getCardsFromJson(responseJson) {
     // Shuffle cards
     cards.sort(() => Math.random() - 0.5);
     return cards;
+}
+
+function finalMethod() {
+    let playingTime = Utils.getPlayingTime(startTime);
+
 }
 
 // Async

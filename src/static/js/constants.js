@@ -35,3 +35,7 @@ const GRID_TABLE_CELL_PREFIX = "grid-cell-"
 
 // Game container
 const GAME_CONTAINER_ID = "game-container";
+
+// End game
+const END_GAME_TIME_SENTENCE_WITH_MIN = "Congratulations! Your time has been: # minutes and $ seconds. Do you want to play again?"
+const END_GAME_TIME_SENTENCE = "Congratulations! Your time has been: # seconds. Do you want to play again?"

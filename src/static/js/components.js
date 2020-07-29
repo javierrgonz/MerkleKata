@@ -1,9 +1,10 @@
 class Card {
-    constructor(id, imageSrc, flippedCards, actualCards) {
+    constructor(id, imageSrc, flippedCards, actualCards, finalMethod) {
         this.id = id;
         this.imageSrc = imageSrc;
         this.flippedCards = flippedCards;
         this.actualCards = actualCards;
+        this.finalMethod = finalMethod;
     }
 
     getCard() {
@@ -24,16 +25,50 @@ class Card {
     flip(image) {
         if (image.classList.contains('transparent')) {
             image.classList.remove('transparent');
-            // Comprobar la longitud del array actualCards
-
-            // si es 0 incluir la carta y no devolver
-
-            // si es 1 obtener el elemento del array y comprobar su imagen
-
-            // si es la misma, pasar ambas cartas al array de flippedCars y vaciar el actualCards
-
-            // si no es la misma, setear clase transparent a ambas cartas y vaciar el actualCards
+            if (this.actualCards.length == 0) {
+                this.actualCards.push(image);
+                finalMethod();
+            } else {
+                this.disableEventListeners()
+                if ((this.actualCards[0].src == image.src) && (this.actualCards[0].id != image.id)) {
+                    // Saves flipped cards and empty actual cards array
+                    this.flippedCards.push(this.actualCards[0]);
+                    this.flippedCards.push(image);
+                    this.actualCards.length = 0;
+                    if (this.flippedCards.length == 20) {
+                        finalMethod();
+                    }
+                } else {
+                    let previousImage = this.actualCards[0];
+                    this.actualCards.length = 0;
+                    AsyncUtils.wait(
+                        500,
+                        this.setTransparent,
+                        [image, previousImage]);
+                }
+            }
         }
+    }
+
+    disableEventListeners() {
+        let images = Array.from(document.getElementsByClassName('card-image'));
+            images.forEach(image =>{
+                image.removeEventListener('click', this.flip, false);
+            });
+    }
+
+    enableEventListeners() {
+        let images = Array.from(document.getElementsByClassName('card-image'));
+            images.forEach(image =>{
+                image.addEventListener('click', event => {
+                    this.flip(image);
+                });
+            });
+    }
+
+    setTransparent(images){
+        images[0].classList.add('transparent');
+        images[1].classList.add('transparent');
     }
 }
 
