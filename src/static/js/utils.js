@@ -10,10 +10,10 @@ class Utils {
 
     static toogleVisibylityById(id) {
         var elem = document.getElementById(id);
-        if (elem.style.display === "none") {
-            elem.style.display = "block";
+        if (elem.classList.contains(CSS_HIDDEN_CLASS)) {
+            elem.classList.replace(CSS_HIDDEN_CLASS, CSS_BLOCK_CLASS);
         } else {
-            elem.style.display = "none";
+            elem.classList.replace(CSS_BLOCK_CLASS, CSS_HIDDEN_CLASS);
         }
     }
     
@@ -32,7 +32,7 @@ class ValidationUtils {
 
     static validateCharacters(string) {
         // Set max of 100 char as pixabay max
-        return /^([a-z0-9]{1,100})$/.test(string);
+        return /^([a-zA-Z0-9]{1,100})$/.test(string);
     }
 
     static validatePixabayResponse(responseJson) {
@@ -48,4 +48,15 @@ class ErrorUtils {
     static cleanMainFormError() {
         this.updateMainFormError(BLANK_STRING);
     }
+}
+
+class AsyncUtils {
+    
+    // Wait function
+    static wait(ms, postFunc, postFuncArg){
+        setTimeout(function () { 
+            postFunc(postFuncArg); }, 
+        ms);
+}
+
 }

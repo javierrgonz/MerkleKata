@@ -1,3 +1,6 @@
+let flippedCards = [];
+let actualCards = [];
+
 function validateKeyword() {
     var keyword = document.getElementById(MAIN_FORM_KEYWORD_ID);
     if (!ValidationUtils.validKeyword(keyword.value)) {
@@ -14,7 +17,11 @@ function startGame(keyword) {
        if (ValidationUtils.validatePixabayResponse(responseJson)) {
             // Create playingField and set grid
             Utils.toogleVisibylityById(MAIN_FORM_CONTENT_ID);
+            // Get cards and grid
             let grid = new Grid(getCardsFromJson(responseJson), GAME_CONTAINER_ID).getGrid();
+            // Show grid
+            AsyncUtils.wait(1000, Utils.toogleVisibylityById, GAME_CONTAINER_ID);
+            AsyncUtils.wait(1500, removeCardsOpacity);
        } else {
             ErrorUtils.updateMainFormError(PIXABAY_NO_RESULTS_ERROR_MSG);
        }
@@ -22,6 +29,27 @@ function startGame(keyword) {
     );
 }
 
+function removeCardsOpacity() {
+   const cardImages = document.querySelectorAll('.card-image');
+   cardImages.forEach(card => {
+        card.classList.add('transparent');
+    });
+}
+
+function getCardsFromJson(responseJson) {
+    const images = responseJson.hits.map(a => a.previewURL);
+    let cards = [];
+    // Create a pair of cards using images
+    for (i=0; i<images.length; ++i) {
+        cards.push(new Card(CARD_ID_PREFFIX + i + "a", images[i], flippedCards, actualCards));
+        cards.push(new Card(CARD_ID_PREFFIX + i + "b", images[i], flippedCards, actualCards));
+    }
+    // Shuffle cards
+    cards.sort(() => Math.random() - 0.5);
+    return cards;
+}
+
+// Async
 const getImages = async (keyword) => {
     const response = await fetch(PIXABAY_BASE_GET_REQUEST.replace(ID_SELECTOR, keyword))
         .catch(function(error) {
@@ -30,16 +58,3 @@ const getImages = async (keyword) => {
     const jsonResponse = await response.json();
     return jsonResponse;
 };
-  
-function getCardsFromJson(responseJson) {
-    const images = responseJson.hits.map(a => a.previewURL);
-    let cards = [];
-    // Create a pair of cards using images
-    for (i=0; i<images.length; ++i) {
-        cards.push(new Card(CARD_ID_PREFFIX + i + "a", images[i]));
-        cards.push(new Card(CARD_ID_PREFFIX + i + "b", images[i]));
-    }
-    // Shuffle cards
-    cards.sort(() => Math.random() - 0.5);
-    return cards;
-}

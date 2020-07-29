@@ -1,6 +1,5 @@
 - Implementar funcionalidad del juego (click, contador, matcher....)
-- Hacer que todas las imagenes se muestren a la vez:
-  - Al aceptar y estar ok mostrar un loading en el div del formulario (donde el mensaje)
-  - Hacer el div hidden al inicio
-  - Dibujar el grid y darle un par de segundos con un wait
-  - Hacer invisible el formulario para que se vea el grid del juego
+- Incluir mensaje para internet explorer
+- Quitar literales y pasarlos a constantes
+  
+  

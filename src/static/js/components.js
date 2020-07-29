@@ -1,23 +1,39 @@
 class Card {
-    constructor(id, imageSrc) {
+    constructor(id, imageSrc, flippedCards, actualCards) {
         this.id = id;
         this.imageSrc = imageSrc;
+        this.flippedCards = flippedCards;
+        this.actualCards = actualCards;
     }
 
     getCard() {
         let image = document.createElement('img');
             image.classList.add(CARD_IMAGE_CLASS);
             image.src = this.imageSrc;
-            image.addEventListener('click', this.showCard(image));
+            image.id = this.id;
+            image.addEventListener('click', event => {
+                this.flip(image);
+            });
         let card = document.createElement('div');
-            card.id = this.id;
+            card.id = 'div_ ' + this.id;
             card.classList.add(CARD_DIV_CLASS);
             card.appendChild(image);
         return card;
     }
 
-    showCard(image) {
-        console.log(image);
+    flip(image) {
+        if (image.classList.contains('transparent')) {
+            image.classList.remove('transparent');
+            // Comprobar la longitud del array actualCards
+
+            // si es 0 incluir la carta y no devolver
+
+            // si es 1 obtener el elemento del array y comprobar su imagen
+
+            // si es la misma, pasar ambas cartas al array de flippedCars y vaciar el actualCards
+
+            // si no es la misma, setear clase transparent a ambas cartas y vaciar el actualCards
+        }
     }
 }
 
@@ -66,7 +82,5 @@ class Grid {
         let parentComponent = document.querySelector(ID_SELECTOR + this.parentComponentId);
             parentComponent.appendChild(grid);
         return parentComponent;
-    }
-
-    
+    } 
 }

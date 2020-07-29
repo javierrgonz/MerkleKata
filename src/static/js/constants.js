@@ -5,6 +5,7 @@ const BLANK_STRING = "";
 
 // CSS classes
 const CSS_HIDDEN_CLASS = "hidden";
+const CSS_BLOCK_CLASS = "block";
 const CSS_ERROR_CLASS = "error"
 
 // Main
