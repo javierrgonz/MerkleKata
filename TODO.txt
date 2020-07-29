@@ -1,5 +1,0 @@
-- Implementar funcionalidad del juego (click, contador, matcher....)
-- Incluir mensaje para internet explorer
-- Quitar literales y pasarlos a constantes
-  
-  

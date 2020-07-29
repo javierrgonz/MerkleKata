@@ -8,32 +8,28 @@ class Card {
     }
 
     getCard() {
-        let image = document.createElement('img');
+        let image = document.createElement(IMG);
             image.classList.add(CARD_IMAGE_CLASS);
             image.src = this.imageSrc;
             image.id = this.id;
-            image.addEventListener('click', event => {
+            image.addEventListener(EVENT_CLICK, event => {
                 this.flip(image);
             });
-        let card = document.createElement('div');
-            card.id = 'div_ ' + this.id;
+        let card = document.createElement(DIV);
+            card.id = CARD_DIV_ID_PREFFIX + this.id;
             card.classList.add(CARD_DIV_CLASS);
             card.appendChild(image);
         return card;
     }
 
     flip(image) {
-        if (image.classList.contains('transparent')) {
-            image.classList.remove('transparent');
+        if (image.classList.contains(CSS_TRANSPARENT_CLASS)) {
+            image.classList.remove(CSS_TRANSPARENT_CLASS);
             if (this.actualCards.length == 0) {
                 this.actualCards.push(image);
-                finalMethod();
             } else {
-                this.disableEventListeners()
                 if ((this.actualCards[0].src == image.src) && (this.actualCards[0].id != image.id)) {
-                    // Saves flipped cards and empty actual cards array
-                    this.flippedCards.push(this.actualCards[0]);
-                    this.flippedCards.push(image);
+                    this.flippedCards.push(this.actualCards[0], image);
                     this.actualCards.length = 0;
                     if (this.flippedCards.length == 20) {
                         finalMethod();
@@ -43,32 +39,17 @@ class Card {
                     this.actualCards.length = 0;
                     AsyncUtils.wait(
                         500,
-                        this.setTransparent,
+                        Card.setTransparent,
                         [image, previousImage]);
                 }
             }
         }
     }
 
-    disableEventListeners() {
-        let images = Array.from(document.getElementsByClassName('card-image'));
-            images.forEach(image =>{
-                image.removeEventListener('click', this.flip, false);
-            });
-    }
-
-    enableEventListeners() {
-        let images = Array.from(document.getElementsByClassName('card-image'));
-            images.forEach(image =>{
-                image.addEventListener('click', event => {
-                    this.flip(image);
-                });
-            });
-    }
-
-    setTransparent(images){
-        images[0].classList.add('transparent');
-        images[1].classList.add('transparent');
+    static setTransparent(images){
+        for (i=0;i<images.length;i++){
+            images[i].classList.add(CSS_TRANSPARENT_CLASS);
+        }
     }
 }
 
@@ -79,43 +60,37 @@ class Grid {
     }
 
     getGrid() {
-        let gridRow1 = document.createElement('tr');
-        let gridRow2 = document.createElement('tr');
-        let gridRow3 = document.createElement('tr');
-        let gridRow4 = document.createElement('tr');
-        let i=0;
-        for (i; i<5; ++i) {
-            let gridCell = document.createElement('td');
-                gridCell.id = GRID_TABLE_CELL_PREFIX + i;    
-                gridCell.appendChild(this.cards[i].getCard())
-                gridRow1.appendChild(gridCell);
-        }
-        for (i; i<10; ++i) {
-            let gridCell = document.createElement('td');
-                gridCell.id = GRID_TABLE_CELL_PREFIX + i;    
-                gridCell.appendChild(this.cards[i].getCard())
-                gridRow2.appendChild(gridCell);
-        }
-        for (i; i<15; ++i) {
-            let gridCell = document.createElement('td');
-                gridCell.id = GRID_TABLE_CELL_PREFIX + i;    
-                gridCell.appendChild(this.cards[i].getCard())
-                gridRow3.appendChild(gridCell);
-        }
-        for (i; i<20; ++i) {
-            let gridCell = document.createElement('td');
-                gridCell.id = GRID_TABLE_CELL_PREFIX + i;    
-                gridCell.appendChild(this.cards[i].getCard())
-                gridRow4.appendChild(gridCell);
-        }
-        let grid = document.createElement('table');
+        let row1 = this.getTr(), row2 = this.getTr(), row3 = this.getTr(), row4 = this.getTr();
+        let cells = this.getCells();
+        let i = 0;
+        do {
+            row1.appendChild(cells[i++]);
+            row2.appendChild(cells[i++]); 
+            row3.appendChild(cells[i++]);
+            row4.appendChild(cells[i++]);
+        } while (i<20);
+        let grid = document.createElement(TABLE);
             grid.classList.add(GRID_TABLE_CLASS);
-            grid.appendChild(gridRow1);
-            grid.appendChild(gridRow2);
-            grid.appendChild(gridRow3);
-            grid.appendChild(gridRow4);
+            grid.append(row1, row2, row3, row4);
         let parentComponent = document.querySelector(ID_SELECTOR + this.parentComponentId);
             parentComponent.appendChild(grid);
         return parentComponent;
     } 
+
+    getTr() {
+        return document.createElement(TR);
+    }
+
+    getCells() {
+        let cells = [];
+        for (i=0; i<20; i++){
+            let cell = document.createElement(TD);
+                cell.id = GRID_TABLE_CELL_PREFIX + i;    
+                cell.appendChild(this.cards[i].getCard())
+                cells.push(cell);
+        }
+        return cells;
+    }
+
+
 }

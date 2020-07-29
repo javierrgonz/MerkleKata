@@ -1,8 +1,5 @@
 class Utils {
-    // General utils
-    static getById(elementId) {
-        return document.getElementById(elementId);
-    }
+   
 
     static getByClass() {
         return document.querySelector(CLASS_SELECTOR + elementId);
@@ -11,9 +8,9 @@ class Utils {
     static toogleVisibylityById(id) {
         let elem = document.getElementById(id);
         if (elem.classList.contains(CSS_HIDDEN_CLASS)) {
-            elem.classList.replace(CSS_HIDDEN_CLASS, CSS_BLOCK_CLASS);
+            elem.classList.remove(CSS_HIDDEN_CLASS);
         } else {
-            elem.classList.replace(CSS_BLOCK_CLASS, CSS_HIDDEN_CLASS);
+            elem.classList.add(CSS_HIDDEN_CLASS);
         }
     }
 
